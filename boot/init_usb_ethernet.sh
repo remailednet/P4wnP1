@@ -108,7 +108,11 @@ function detect_active_interface()
 
 	# setup active interface with correct IP
 	if [ "$active_interface" != "none" ]; then
-		ifconfig $active_interface $IF_IP netmask $IF_MASK
+		if [ $IF_DHCP ]; then
+			dhclient $active_interface
+		else
+			ifconfig $active_interface $IF_IP netmask $IF_MASK
+		fi
 	fi
 
 
