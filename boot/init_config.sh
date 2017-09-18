@@ -24,6 +24,15 @@
 # include setup.cfg
 source $wdir/setup.cfg
 
+echo "PwwnP1: Checking for arming mode..."
+echo "4" > /sys/class/gpio/export
+echo "in" > /sys/class/gpio/gpio4/direction
+
+if [[ $(< /sys/class/gpio/gpio4/value) == 0 ]]; then
+	echo "P4wnP1 in arming mode"
+	PAYLOAD=arming.txt
+fi
+
 # include payload (overrides variables set by setup.cfg if needed)
 # PAYLOAD itself is define in setup.cfg
 source $wdir/payloads/$PAYLOAD
